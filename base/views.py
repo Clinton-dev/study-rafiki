@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .models import Room
 
 def home(request):
-    return render(request, "base/home.html")
+    rooms = Room.objects.all()
+    context = {
+        'rooms': rooms
+    }
+    return render(request, "base/home.html", context)
 
 def room(request, pk):
-    return render(request,"base/room.html")
+    room = Room.objects.get(id=pk)
+    return render(request,"base/room.html", {'room':room})
