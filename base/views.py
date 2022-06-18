@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import Room,Topic
 from .forms import RoomForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -57,6 +58,7 @@ def room(request, pk):
     room = Room.objects.get(id=pk)
     return render(request,"base/room.html", {'room':room})
 
+@login_required(login_url='/login')
 def createRoom(request):
     form = RoomForm()
 
