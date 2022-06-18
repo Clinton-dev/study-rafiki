@@ -3,6 +3,33 @@ from django.db.models import Q #allow chaining of queries
 from django.http import HttpResponse
 from .models import Room,Topic
 from .forms import RoomForm
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
+
+
+def loginView(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.warning(request, 'login details are invalid please check the username or password!')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.warning(request, 'login failed!')
+            return redirect('login')
+
+    context = {}
+    return render(request, 'base/login_register.html', context)
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -13,10 +40,12 @@ def home(request):
         Q(name__icontains=q)
     )
     topics = Topic.objects.all()
+    rooms_count = rooms.count()
 
     context = {
         'rooms': rooms,
-        'topics': topics
+        'topics': topics,
+        'room_count': rooms_count
     }
     return render(request, "base/home.html", context)
 
