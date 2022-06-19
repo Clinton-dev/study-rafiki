@@ -92,8 +92,6 @@ def room(request, pk):
 
         return redirect('room', pk=room.id)
 
-
-
     context = {
         'room':room,
         'room_messages': room_messages
