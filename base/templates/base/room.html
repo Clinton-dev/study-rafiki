@@ -3,4 +3,15 @@
 {% block content%}
 
 <h2>{{room.name}}</h2>
+
+<p>{{room.description}}</p>
+
+<div class="comment-wrapper">
+    <h3>Conversations</h3>
+    <hr>
+    {% for message in room_messages %}
+        <p>{{message.body}}</p>
+    {% endfor %}
+</div>
 {% endblock content%}
+
