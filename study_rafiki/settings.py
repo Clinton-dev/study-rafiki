@@ -121,8 +121,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Allow static files etc css, js
-STATICFILES_URL = [
-    BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
 ]
 
 # Default primary key field type
