@@ -38,13 +38,7 @@
 
     <div>
         <h3>Recent activity</h3>
-        {% for message in room_messages%}
-            <p>@{{message.user}} {{message.created|timesince}}</p>
-            <p>{{ message }}</p>
-            {% if message.user == request.user %}
-                    <a href="{% url 'delete-comment' message.id %}">Delete</a>
-                {% endif %}
-        {% endfor %}
+        {% include 'base/activity_component.html'%}
     </div>
 </div>
 
