@@ -18,6 +18,10 @@
             <h3>Conversations</h3>
             <hr>
             {% for message in room_messages %}
+                {% if message.user == request.user %}
+                <a href="{% url 'update-comment' message.id %}">Update</a>
+                    <a href="{% url 'delete-comment' message.id %}">Delete</a>
+                {% endif %}
                 <small>@{{message.user}} {{message.created | timesince }}</small>
                 <p>{{message.body}}</p>
             {% endfor %}
@@ -35,6 +39,9 @@
     <div>
         <h3>Participants</h3>
         <hr>
+        {% for participant in participants%}
+            <p>@{{participant.username}}</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock content%}
